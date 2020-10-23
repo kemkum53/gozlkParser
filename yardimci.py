@@ -8,7 +8,7 @@ def edit_string(word):
     word = word.replace(',', '')
     word = word.replace(';', '')
     word = word.replace(':', '')
-    word = word.replace('’', '')
+    word = word.replace('’', '\'')
     word = word.replace('“', '')
     word = word.replace('”', '')
     word = word.replace('…', '')
@@ -19,13 +19,11 @@ def sapka_sil(letter):
     if letter == 'â':
         return 'a'
     if letter == 'ê':
-        return 'ê'
+        return 'e'
     if letter == 'î':
-        return 'î'
-    if letter == 'ô':
-        return 'ô'
+        return 'i'
     if letter == 'û':
-        return 'û'
+        return 'u'
     else: return letter
     
 # Gelen stringi küçük harfe çevirir.
@@ -49,6 +47,15 @@ def to_upper(word):
     toupper_text = (toupper_text.replace('ş', 'Ş'))
     toupper_text = toupper_text.upper()
     return toupper_text
+
+# Ön kontrol yapar
+def pre_check(kelime):
+    gunluk_sozluk = sql.connect('gunluk_turkce.sqlite')
+    im = gunluk_sozluk.cursor()
+    im.execute("SELECT word FROM words WHERE word = ?", (str.lower(kelime),))
+    if im.fetchall() != []:
+        return True
+    else: return False
 
 # Sözlükte arama yapar.
 def search_db(kelime):

@@ -1,6 +1,4 @@
-# Bulamadığı kelimelerde 1-2 harfli şeyleri döndürüyor
-
-from yardimci import edit_string, search_db, sapka_sil
+from yardimci import edit_string, search_db, sapka_sil, pre_check
 
 girdi = input("Veri giriniz: ")
 kelimeler = girdi.split()
@@ -15,6 +13,8 @@ for kelime in kelimeler:
     ara2 = ""
     anlamlar = []
     sapkali_arama = False
+    if pre_check(sapka_sil(kelime)):
+        continue
     # Kelime 2 harfli ise
     if len(kelime) == 2:
         anlam = search_db(kelime)
@@ -25,9 +25,9 @@ for kelime in kelimeler:
     # Kelime 2 harften fazlaysa
     else:
         for x in temp:
-            if x in sapkali_harfler:
+            if x in sapkali_harfler and sapkali_arama == False:
                 sapkali_arama = True
-                ara2 = ara1
+                ara2 = sapka_sil(ara1)
             # Şapkalı harf varsa
             if sapkali_arama:
                 ara1 += x
@@ -49,6 +49,7 @@ for kelime in kelimeler:
                 if anlam != []:
                     anlamlar.append(anlam)
     if anlamlar != []:
+        print(kelime)
         print(anlamlar[-1])
     else:
         bulunamayan.append(kelime)
