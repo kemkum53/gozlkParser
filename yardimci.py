@@ -1,7 +1,7 @@
 import sqlite3 as sql
 
 # Stringdeki yabancı karakterleri siliyor.
-def edit_string(word):
+def delete_undefined_letters(word):
     word = word.replace('?', '')
     word = word.replace('.', '')
     word = word.replace('!', '')
@@ -15,6 +15,7 @@ def edit_string(word):
     word = to_lower(word)
     return word
 
+# Şapkalı harfleri siliyor.
 def sapka_sil(letter):
     if letter == 'â':
         return 'a'
@@ -48,7 +49,7 @@ def to_upper(word):
     toupper_text = toupper_text.upper()
     return toupper_text
 
-# Ön kontrol yapar
+# Günlük kullanılan kelimelerde arama yapar.
 def pre_check(kelime):
     gunluk_sozluk = sql.connect('gunluk_turkce.sqlite')
     im = gunluk_sozluk.cursor()
@@ -62,6 +63,8 @@ def search_db(kelime):
     sozluk = sql.connect('sozluk.sqlite')
     im = sozluk.cursor()
     im.execute("SELECT a FROM sozluk WHERE a = ?", (to_upper(kelime),))
+    # Anlamlarıyla birlikte yazdırmak için alt satırı aktif edin. 
+    # im.execute("SELECT a,b FROM sozluk WHERE a = ?", (to_upper(kelime),))
     anlam = im.fetchall()
     return anlam
 
