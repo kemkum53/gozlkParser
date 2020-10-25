@@ -18,7 +18,7 @@ def delete_undefined_letters(word):
     return word
 
 # Şapkalı harfleri siliyor.
-def sapka_sil(letter):
+def delete_capp(letter):
     if letter == 'â':
         return 'a'
     if letter == 'ê':
@@ -52,21 +52,21 @@ def to_upper(word):
     return toupper_text
 
 # Günlük kullanılan kelimelerde arama yapar.
-def pre_check(kelime):
+def pre_check(word):
     gunluk_sozluk = sql.connect('gunluk_turkce.sqlite')
     im = gunluk_sozluk.cursor()
-    im.execute("SELECT word FROM words WHERE word = ?", (str.lower(kelime),))
+    im.execute("SELECT word FROM words WHERE word = ?", (str.lower(word),))
     if im.fetchall() != []:
         return True
     else: return False
 
 # Sözlükte arama yapar.
-def search_db(kelime):
+def search_db(word):
     sozluk = sql.connect('sozluk.sqlite')
     im = sozluk.cursor()
-    im.execute("SELECT a FROM sozluk WHERE a = ?", (to_upper(kelime),))
+    im.execute("SELECT a FROM sozluk WHERE a = ?", (to_upper(word),))
     # Anlamlarıyla birlikte yazdırmak için alt satırı aktif edin. 
-    # im.execute("SELECT a,b FROM sozluk WHERE a = ?", (to_upper(kelime),))
+    # im.execute("SELECT a,b FROM sozluk WHERE a = ?", (to_upper(word),))
     anlam = im.fetchall()
     return anlam
 
