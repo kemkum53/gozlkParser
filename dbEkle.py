@@ -1,8 +1,8 @@
 import sqlite3 as sql
 import yardimci
 
-veri = input("veri:")
-kelimeler = veri.split()
+data = input("veri:")
+words = data.split()
 
 # Kelime database'de var mı diye bakıyor.
 def db_kontrol(kelime):
@@ -24,13 +24,13 @@ def db_ekle(kelime):
     db.close()
 
 # Kelimeyi kontrol edip database'e ekliyor.    
-for kelime in kelimeler:
-    kelime = yardimci.delete_undefined_letters(kelime)
-    if db_kontrol(kelime):
+for word in words:
+    word = yardimci.delete_undefined_letters(word)
+    if db_kontrol(word):
         continue
     else:
-        cevap = input(print("'" + kelime + "' (E/H): "))
-        if cevap == 'e' or cevap == 'E':
-            db_ekle(kelime)
+        answer = input(print("'" + word + "' (E/H): "))
+        if answer == 'e' or answer == 'E':
+            db_ekle(word)
             
             
