@@ -2,6 +2,7 @@ import sqlite3 as sql
 
 # Stringdeki yabancı karakterleri siliyor.
 def delete_undefined_letters(word):
+    word = to_lower(word)
     word = word.replace('?', '')
     word = word.replace('.', '')
     word = word.replace('!', '')
@@ -12,7 +13,8 @@ def delete_undefined_letters(word):
     word = word.replace('“', '')
     word = word.replace('”', '')
     word = word.replace('…', '')
-    word = to_lower(word)
+    word = word.replace('(', '')
+    word = word.replace(')', '')
     return word
 
 # Şapkalı harfleri siliyor.

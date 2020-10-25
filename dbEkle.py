@@ -1,8 +1,10 @@
 import sqlite3 as sql
+import yardimci
+
 veri = input("veri:")
 kelimeler = veri.split()
 
-
+# Kelime database'de var mı diye bakıyor.
 def db_kontrol(kelime):
     db = sql.connect("gunluk_turkce.sqlite")
     im = db.cursor()
@@ -13,6 +15,7 @@ def db_kontrol(kelime):
         return True # DB'de var
     else: return False # DB'de yok
 
+# Kelimeyi database'e ekliyor
 def db_ekle(kelime):
     db = sql.connect("gunluk_turkce.sqlite")
     im = db.cursor()
@@ -20,24 +23,9 @@ def db_ekle(kelime):
     db.commit()
     db.close()
 
-def string_temizle(kelime):
-    kelime = str.lower(kelime)
-    kelime = kelime.replace('?', '')
-    kelime = kelime.replace('.', '')
-    kelime = kelime.replace('!', '')
-    kelime = kelime.replace(',', '')
-    kelime = kelime.replace(';', '')
-    kelime = kelime.replace(':', '')
-    kelime = kelime.replace('’', '')
-    kelime = kelime.replace('“', '')
-    kelime = kelime.replace('”', '')
-    kelime = kelime.replace('…', '')
-    kelime = kelime.replace('(', '')
-    kelime = kelime.replace(')', '')
-    return kelime
-    
+# Kelimeyi kontrol edip database'e ekliyor.    
 for kelime in kelimeler:
-    kelime = string_temizle(kelime)
+    kelime = yardimci.delete_undefined_letters(kelime)
     if db_kontrol(kelime):
         continue
     else:
