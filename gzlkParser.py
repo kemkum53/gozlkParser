@@ -1,5 +1,5 @@
 from helpers import delete_undefined_letters, search_db, delete_capp, pre_check
-import json
+# import json
 def get_meanings(data):
     # data = input("Veri: ")
     words = data.split()
@@ -60,4 +60,5 @@ def get_meanings(data):
         else:
             undetectable.append(word)
         
-    return json(send, ensure_ascii=False)
+    return send
+    # return json(send, ensure_ascii=False)
