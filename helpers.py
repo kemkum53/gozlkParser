@@ -53,7 +53,7 @@ def to_upper(word):
 
 # Günlük kullanılan kelimelerde arama yapar.
 def pre_check(word):
-    gunluk_sozluk = sql.connect('gunluk_turkce.sqlite')
+    gunluk_sozluk = sql.connect('daily_dictionary.sqlite')
     im = gunluk_sozluk.cursor()
     im.execute("SELECT word FROM words WHERE word = ?", (str.lower(word),))
     if im.fetchall() != []:
@@ -62,11 +62,11 @@ def pre_check(word):
 
 # Sözlükte arama yapar.
 def search_db(word):
-    sozluk = sql.connect('sozluk.sqlite')
+    sozluk = sql.connect('dictionary.sqlite')
     im = sozluk.cursor()
-    im.execute("SELECT a FROM sozluk WHERE a = ?", (to_upper(word),))
+    # im.execute("SELECT a FROM sozluk WHERE a = ?", (to_upper(word),))
     # Anlamlarıyla birlikte yazdırmak için alt satırı aktif edin. 
-    # im.execute("SELECT a,b FROM sozluk WHERE a = ?", (to_upper(word),))
+    im.execute("SELECT b FROM sozluk WHERE a = ?", (to_upper(word),))
     anlam = im.fetchall()
     return anlam
 
